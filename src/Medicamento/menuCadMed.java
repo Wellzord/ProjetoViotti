@@ -5,6 +5,12 @@
  */
 package Medicamento;
 
+import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Wellington
@@ -45,8 +51,12 @@ public class menuCadMed extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Cadastro de Medicamentos");
-        setPreferredSize(new java.awt.Dimension(550, 399));
         setResizable(false);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel1.setBackground(new java.awt.Color(29, 131, 72));
@@ -123,6 +133,11 @@ public class menuCadMed extends javax.swing.JFrame {
         btnCadastrar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagens/cadastrar.fw.png"))); // NOI18N
         btnCadastrar.setContentAreaFilled(false);
         btnCadastrar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnCadastrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCadastrarActionPerformed(evt);
+            }
+        });
         jPanel1.add(btnCadastrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 290, 146, -1));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 550, -1));
@@ -130,6 +145,14 @@ public class menuCadMed extends javax.swing.JFrame {
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        limpar();
+    }//GEN-LAST:event_formWindowOpened
+
+    private void btnCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadastrarActionPerformed
+        cadastraCliente();
+    }//GEN-LAST:event_btnCadastrarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -183,4 +206,64 @@ public class menuCadMed extends javax.swing.JFrame {
     private javax.swing.JFormattedTextField txtPreco;
     private javax.swing.JFormattedTextField txtValidade;
     // End of variables declaration//GEN-END:variables
+    
+//rotina de gravacao do filme
+    private void cadastraCliente() {
+        Medicamento med = new Medicamento();
+        MedicamentoDAO dbMed = new MedicamentoDAO();
+        
+        //tratando a porra das datas
+        String aux1 = txtFabricacao.getText();
+        String aux2 = txtValidade.getText();
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        try{
+            Date dataFab = sdf.parse(aux1);
+            Date dataVal = sdf.parse(aux2);
+            med.setFabricacao(dataFab);
+            med.setValidade(dataVal);
+        }
+        catch(ParseException e){
+            System.out.println("Não converteu essa merda de data");
+        }
+        //
+        med.setIdMed(Integer.valueOf(txtIdMed.getText()));
+        med.setNome(txtNome.getText());
+        med.setTarja(cmbTarja.getSelectedItem().toString());
+        String auxStr = txtPreco.getText();
+        auxStr = auxStr.replace(",", ".");
+        med.setPreco(Double.parseDouble(auxStr));
+        try {
+            if(dbMed.inserir(med)){
+                JOptionPane.showMessageDialog(this, "Filme Inserido com Sucesso!!!", "Mensagem ao Usuário", JOptionPane.INFORMATION_MESSAGE);
+                limpar();
+            }
+            else {
+                JOptionPane.showMessageDialog(this,"Erro ao Inserir","Mensagem ao Usuário",JOptionPane.ERROR_MESSAGE);
+            }
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(this,"Erro SQL " + ex.getMessage(),"Mensagem ao Usuário",JOptionPane.ERROR_MESSAGE);
+        } catch (ClassNotFoundException ex) {
+            JOptionPane.showMessageDialog(this,"Erro Class " + ex.getMessage(),"Mensagem ao Usuário",JOptionPane.ERROR_MESSAGE);
+        }       
+    }
+
+//Limpar botoes após gravação
+    private void limpar() {
+        MedicamentoDAO daoMed = new MedicamentoDAO();
+        int codigo;
+        //Quando limpar já joga o valor do próximo código
+        try{
+            codigo = daoMed.carregaCodigo();
+            txtIdMed.setText(String.valueOf(codigo)); 
+        }
+        catch(ClassNotFoundException | SQLException e){
+            System.out.println(e.getMessage());
+        }
+        txtNome.setText("");
+        cmbTarja.setSelectedIndex(0);
+        txtValidade.setText("");
+        txtFabricacao.setText("");
+        txtPreco.setText("");
+        txtNome.requestFocus();
+    }  
 }

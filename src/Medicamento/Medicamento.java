@@ -14,15 +14,11 @@ import java.util.Date;
 public class Medicamento {
     private int idMed;
     private String nome;
-    private Tarja tj;
+    private String tarja;
     private Date fabricacao;
     private Date validade;
     private double preco;
 
-    public enum Tarja { 
-        SEMTARJA, AMARELA, VERMELHA, PRETA 
-    };
-    
     public int getIdMed() {
         return idMed;
     }
@@ -39,12 +35,12 @@ public class Medicamento {
         this.nome = nome;
     }
 
-    public Tarja getTj() {
-        return tj;
+    public String getTarja() {
+        return tarja;
     }
 
-    public void setTj(Tarja tj) {
-        this.tj = tj;
+    public void setTarja(String tarja) {
+        this.tarja = tarja;
     }
 
     public Date getFabricacao() {

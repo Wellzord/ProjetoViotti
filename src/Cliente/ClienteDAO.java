@@ -168,13 +168,17 @@ public class ClienteDAO implements DAO<Cliente> {
         BancoDerby.abrir();
         stmt = BancoDerby.getConexao().prepareStatement(sql);
         rs = stmt.executeQuery();
-        //pega o último/maior número da tabela e retorna +1;
-        rs.next();
-        retorno = rs.getInt("IDCLIENTE");
-        rs.close();
-        BancoDerby.fechar();
-        //caso seja o primeiro registro
-        if (retorno > 0) return retorno+1;
-        else return 1;
+        if(!rs.next()) {
+            rs.close();
+            BancoDerby.fechar();
+            return 1;
+        }
+        else {
+            rs.next();
+            retorno = rs.getInt("IDCLIENTE");
+            rs.close();
+            BancoDerby.fechar();
+            return retorno+1;
+        }
     }
 }

@@ -290,7 +290,7 @@ public class menuCadCliente extends javax.swing.JFrame {
         cliente.setSexo(cmbSexo.getSelectedItem().toString().charAt(0));
         try {
             if(dbCLI.inserir(cliente)){
-                JOptionPane.showMessageDialog(this, "Filme Inserido com Sucesso!!!", "Mensagem ao Usuário", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Medicamento Inserido com Sucesso!!!", "Mensagem ao Usuário", JOptionPane.INFORMATION_MESSAGE);
                 limpar();
             }
             else {
