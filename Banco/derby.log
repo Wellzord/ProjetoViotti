@@ -1,7 +1,7 @@
-Tue Nov 27 22:34:59 BRST 2018 : Apache Derby Servidor de Rede - 10.13.1.1 - (Unversioned directory) iniciado e pronto para aceitar conexões na porta 1527 em {3}
+Wed Nov 28 17:27:34 BRST 2018 : Apache Derby Servidor de Rede - 10.13.1.1 - (Unversioned directory) iniciado e pronto para aceitar conexões na porta 1527 em {3}
 ----------------------------------------------------------------
-Tue Nov 27 22:34:59 BRST 2018:
- Inicializando o Derby versão The Apache Software Foundation - Apache Derby - 10.13.1.1 - (Unversioned directory): instância a816c00e-0167-57bd-7af8-fffffebd99cd
+Wed Nov 28 17:27:34 BRST 2018:
+ Inicializando o Derby versão The Apache Software Foundation - Apache Derby - 10.13.1.1 - (Unversioned directory): instância a816c00e-0167-5bca-6359-fffffebd99cd
 no diretório de banco de dados D:\Documentos\Faculdade\OOP\ProjetoViotti\Banco\Farmacia 
 
 java.vendor=Oracle Corporation
@@ -12,3 +12,5 @@ os.arch=amd64
 os.version=10.0
 derby.system.home=D:\Documentos\Faculdade\OOP\ProjetoViotti\Banco
 Carregador de classe do banco de dados iniciado - derby.database.classpath=''
+----------------------------------------------------------------
+Wed Nov 28 18:03:49 BRST 2018: Shutting down Derby engine

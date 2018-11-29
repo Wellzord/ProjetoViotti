@@ -175,7 +175,6 @@ public class MedicamentoDAO implements DAO<Medicamento> {
             return 1;
         }
         else {
-            rs.next();
             retorno = rs.getInt("IDMEDICAMENTO");
             rs.close();
             BancoDerby.fechar();

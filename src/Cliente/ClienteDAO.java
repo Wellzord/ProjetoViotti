@@ -106,8 +106,7 @@ public class ClienteDAO implements DAO<Cliente> {
         String sql = "SELECT * FROM CLIENTES WHERE IDCLIENTE = ?";
         BancoDerby.abrir();
         stmt = BancoDerby.getConexao().prepareStatement(sql);
-        //Atribuir os dados do model para o pst
-
+        //Atribuir os dados do model para o stmt
         stmt.setInt(1, obj.getIdCliente());
         //Executa a PESQUISA no banco
         rs = stmt.executeQuery();
@@ -174,7 +173,6 @@ public class ClienteDAO implements DAO<Cliente> {
             return 1;
         }
         else {
-            rs.next();
             retorno = rs.getInt("IDCLIENTE");
             rs.close();
             BancoDerby.fechar();
