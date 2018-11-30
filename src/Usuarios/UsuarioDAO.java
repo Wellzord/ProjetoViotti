@@ -50,4 +50,48 @@ public class UsuarioDAO {
             return true;
         }
     }
+    
+    public boolean inserir(Usuario obj) throws SQLException, ClassNotFoundException {
+        String sql;
+        //cria o comando DML
+        sql = "INSERT INTO USUARIOS (IDUSUARIO, USUARIO, SENHA, TIPOUSER) values (?, ?, ?, ?)";
+        //Cria o pst com base na conexao e no comando DML
+        BancoDerby.abrir();
+        stmt = BancoDerby.getConexao().prepareStatement(sql);
+        //Atribuir os dados do model para o pst
+        stmt.setInt(1, obj.IDUSER);
+        stmt.setString(2, obj.getUsuario());
+        stmt.setString(3, obj.getSenha());
+        stmt.setBoolean(4, obj.isTipoUser());
+        
+        //vamos executar o comando
+        if(stmt.executeUpdate() > 0) {
+            BancoDerby.fechar();
+            return true;
+        }
+        else {
+            BancoDerby.fechar();
+            return false;
+        }
+    }
+    
+    public int carregaCodigo () throws SQLException, ClassNotFoundException {
+        //função para ir preenchendo o ID Cliente no banco de dados
+        int retorno;
+        String sql = "SELECT IDUSUARIO FROM USUARIOS ORDER BY IDUSUARIO DESC";
+        BancoDerby.abrir();
+        stmt = BancoDerby.getConexao().prepareStatement(sql);
+        rs = stmt.executeQuery();
+        if(!rs.next()) {
+            rs.close();
+            BancoDerby.fechar();
+            return 1;
+        }
+        else {
+            retorno = rs.getInt("IDUSUARIO");
+            rs.close();
+            BancoDerby.fechar();
+            return retorno+1;
+        }
+    }
 }

@@ -65,7 +65,5 @@ public class Cliente {
 
     public void setSexo(char sexo) {
         this.sexo = sexo;
-    }
-    
-    
+    }      
 }

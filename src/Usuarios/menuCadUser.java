@@ -20,7 +20,7 @@ public class menuCadUser extends javax.swing.JFrame {
     /** Creates new form menuCadCliente */
     public menuCadUser() {
         initComponents();
-        txtNome.requestFocus();
+        txtUsuario.requestFocus();
     }
 
     /** This method is called from within the constructor to
@@ -34,19 +34,19 @@ public class menuCadUser extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
-        lblNome = new javax.swing.JLabel();
-        txtNome = new javax.swing.JTextField();
-        lblCpf = new javax.swing.JLabel();
-        cmbSexo = new javax.swing.JComboBox<>();
-        lblIdCliente = new javax.swing.JLabel();
-        txtIdCliente = new javax.swing.JTextField();
-        txtCpf = new javax.swing.JFormattedTextField();
+        lblUsuario = new javax.swing.JLabel();
+        txtUsuario = new javax.swing.JTextField();
+        lblSenha = new javax.swing.JLabel();
+        cmbTipo = new javax.swing.JComboBox<>();
+        lblIdUser = new javax.swing.JLabel();
+        txtIdUser = new javax.swing.JTextField();
         btnCadastrar = new javax.swing.JButton();
-        lblCpf1 = new javax.swing.JLabel();
-        jLabel1 = new javax.swing.JLabel();
+        lblTipo = new javax.swing.JLabel();
+        txtSenha = new javax.swing.JPasswordField();
+        lblTitulo = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Cadastro de Clientes");
+        setTitle("Cadastro de Usuários");
         setBackground(java.awt.Color.darkGray);
         setName("frmCadCli"); // NOI18N
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -59,28 +59,26 @@ public class menuCadUser extends javax.swing.JFrame {
 
         jPanel2.setBackground(new java.awt.Color(29, 131, 72));
 
-        lblNome.setFont(new java.awt.Font("Open Sans", 1, 18)); // NOI18N
-        lblNome.setForeground(new java.awt.Color(240, 240, 240));
-        lblNome.setText("USUÁRIO:");
+        lblUsuario.setFont(new java.awt.Font("Open Sans", 1, 18)); // NOI18N
+        lblUsuario.setForeground(new java.awt.Color(240, 240, 240));
+        lblUsuario.setText("USUÁRIO:");
 
-        txtNome.setFont(new java.awt.Font("Open Sans", 0, 16)); // NOI18N
+        txtUsuario.setFont(new java.awt.Font("Open Sans", 0, 16)); // NOI18N
 
-        lblCpf.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        lblCpf.setForeground(new java.awt.Color(240, 240, 240));
-        lblCpf.setText("SENHA:");
+        lblSenha.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        lblSenha.setForeground(new java.awt.Color(240, 240, 240));
+        lblSenha.setText("SENHA:");
 
-        cmbSexo.setBackground(new java.awt.Color(29, 131, 72));
-        cmbSexo.setFont(new java.awt.Font("Open Sans", 0, 16)); // NOI18N
-        cmbSexo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "GERENTE", "ATENDENTE" }));
+        cmbTipo.setBackground(new java.awt.Color(29, 131, 72));
+        cmbTipo.setFont(new java.awt.Font("Open Sans", 0, 16)); // NOI18N
+        cmbTipo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "GERENTE", "ATENDENTE" }));
 
-        lblIdCliente.setFont(new java.awt.Font("Open Sans", 1, 18)); // NOI18N
-        lblIdCliente.setForeground(new java.awt.Color(240, 240, 240));
-        lblIdCliente.setText("CÓDIGO:");
+        lblIdUser.setFont(new java.awt.Font("Open Sans", 1, 18)); // NOI18N
+        lblIdUser.setForeground(new java.awt.Color(240, 240, 240));
+        lblIdUser.setText("CÓDIGO:");
 
-        txtIdCliente.setEditable(false);
-        txtIdCliente.setFont(new java.awt.Font("Open Sans", 0, 16)); // NOI18N
-
-        txtCpf.setFont(new java.awt.Font("Open Sans", 0, 16)); // NOI18N
+        txtIdUser.setEditable(false);
+        txtIdUser.setFont(new java.awt.Font("Open Sans", 0, 16)); // NOI18N
 
         btnCadastrar.setBackground(new java.awt.Color(29, 131, 72));
         btnCadastrar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagens/cadastrar.fw.png"))); // NOI18N
@@ -94,9 +92,12 @@ public class menuCadUser extends javax.swing.JFrame {
             }
         });
 
-        lblCpf1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        lblCpf1.setForeground(new java.awt.Color(240, 240, 240));
-        lblCpf1.setText("TIPO:");
+        lblTipo.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        lblTipo.setForeground(new java.awt.Color(240, 240, 240));
+        lblTipo.setText("TIPO:");
+
+        txtSenha.setFont(new java.awt.Font("Open Sans", 0, 16)); // NOI18N
+        txtSenha.setText("jPasswordField1");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -107,65 +108,63 @@ public class menuCadUser extends javax.swing.JFrame {
                 .addComponent(btnCadastrar, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE))
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(lblNome)
-                    .addComponent(lblCpf)
-                    .addComponent(lblIdCliente)
-                    .addComponent(lblCpf1))
+                    .addComponent(lblUsuario)
+                    .addComponent(lblSenha)
+                    .addComponent(lblIdUser)
+                    .addComponent(lblTipo))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(cmbSexo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(txtNome, javax.swing.GroupLayout.DEFAULT_SIZE, 300, Short.MAX_VALUE)
-                        .addComponent(txtIdCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(txtCpf)))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(cmbTipo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtUsuario, javax.swing.GroupLayout.DEFAULT_SIZE, 300, Short.MAX_VALUE)
+                    .addComponent(txtIdUser, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtSenha))
                 .addContainerGap(178, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblIdCliente)
-                    .addComponent(txtIdCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(lblIdUser)
+                    .addComponent(txtIdUser, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblNome))
+                    .addComponent(txtUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblUsuario))
                 .addGap(23, 23, 23)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtCpf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblCpf))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
+                    .addComponent(lblSenha)
+                    .addComponent(txtSenha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(cmbSexo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblCpf1))
+                    .addComponent(cmbTipo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblTipo))
                 .addGap(29, 29, 29)
                 .addComponent(btnCadastrar, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
-        jLabel1.setBackground(new java.awt.Color(29, 131, 72));
-        jLabel1.setFont(new java.awt.Font("Concert One", 1, 36)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(240, 240, 240));
-        jLabel1.setText("CADASTRO DE USUÁRIOS");
+        lblTitulo.setBackground(new java.awt.Color(29, 131, 72));
+        lblTitulo.setFont(new java.awt.Font("Concert One", 1, 36)); // NOI18N
+        lblTitulo.setForeground(new java.awt.Color(240, 240, 240));
+        lblTitulo.setText("CADASTRO DE USUÁRIOS");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(82, 82, 82)
-                        .addComponent(jLabel1)))
+                .addContainerGap()
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(lblTitulo)
+                .addGap(81, 81, 81))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(lblTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(27, 27, 27)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -187,7 +186,7 @@ public class menuCadUser extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadastrarActionPerformed
-        cadastraCliente();
+        cadastraUsuario();
     }//GEN-LAST:event_btnCadastrarActionPerformed
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
@@ -233,47 +232,39 @@ public class menuCadUser extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCadastrar;
-    private javax.swing.JComboBox<String> cmbSexo;
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JComboBox<String> cmbTipo;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JLabel lblCpf;
-    private javax.swing.JLabel lblCpf1;
-    private javax.swing.JLabel lblIdCliente;
-    private javax.swing.JLabel lblNome;
-    private javax.swing.JFormattedTextField txtCpf;
-    private javax.swing.JTextField txtIdCliente;
-    private javax.swing.JTextField txtNome;
+    private javax.swing.JLabel lblIdUser;
+    private javax.swing.JLabel lblSenha;
+    private javax.swing.JLabel lblTipo;
+    private javax.swing.JLabel lblTitulo;
+    private javax.swing.JLabel lblUsuario;
+    private javax.swing.JTextField txtIdUser;
+    private javax.swing.JPasswordField txtSenha;
+    private javax.swing.JTextField txtUsuario;
     // End of variables declaration//GEN-END:variables
     
 //rotina de gravacao do filme
-    private void cadastraCliente() {
-        Cliente cliente = new Cliente();
-        ClienteDAO dbCLI = new ClienteDAO();
+    @SuppressWarnings("static-access")
+    private void cadastraUsuario() {
+        Usuario user = new Usuario();
+        UsuarioDAO dbUser = new UsuarioDAO();
         
-        //tratando a porra das datas
-        String aux = txtDataNasc.getText();
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-        try{
-            Date dataNasc = sdf.parse(aux);
-            cliente.setDateNasc(dataNasc);
-        }
-        catch(ParseException e){
-            System.out.println("Não converteu essa merda de data");
-        }
-        //
-        cliente.setIdCliente(Integer.valueOf(txtIdCliente.getText()));
-        cliente.setCpf(txtCpf.getText());
-        cliente.setNome(txtNome.getText());
-        cliente.setAposentado(rdbAposentado.isSelected());
-        cliente.setSexo(cmbSexo.getSelectedItem().toString().charAt(0));
+        user.IDUSER = Integer.valueOf(txtIdUser.getText());
+        user.setUsuario(txtUsuario.getText());
+        user.setSenha(txtSenha.getText());
+        if (cmbTipo.getSelectedIndex() == 0)
+            user.setTipoUser(true);
+        else
+            user.setTipoUser(false);
         try {
-            if(dbCLI.inserir(cliente)){
-                JOptionPane.showMessageDialog(this, "Medicamento Inserido com Sucesso!!!", "Mensagem ao Usuário", JOptionPane.INFORMATION_MESSAGE);
+            if(dbUser.inserir(user)){
+                JOptionPane.showMessageDialog(this, "Usuario cadastrado com Sucesso!!!", "Mensagem ao Usuário", JOptionPane.INFORMATION_MESSAGE);
                 limpar();
             }
             else {
-                JOptionPane.showMessageDialog(this,"Erro ao Inserir","Mensagem ao Usuário",JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this,"Erro ao cadastrar o usuário:"+ txtUsuario.getText(),"Mensagem ao Usuário",JOptionPane.ERROR_MESSAGE);
             }
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(this,"Erro SQL " + ex.getMessage(),"Mensagem ao Usuário",JOptionPane.ERROR_MESSAGE);
@@ -283,21 +274,19 @@ public class menuCadUser extends javax.swing.JFrame {
     }
 //Limpar botoes após gravação
     private void limpar(){
-        ClienteDAO daoCli = new ClienteDAO();
+        UsuarioDAO dbUser = new UsuarioDAO();
         int codigo;
         //Quando limpar já joga o valor do próximo código
         try{
-            codigo = daoCli.carregaCodigo();
-            txtIdCliente.setText(String.valueOf(codigo)); 
+            codigo = dbUser.carregaCodigo();
+            txtIdUser.setText(String.valueOf(codigo)); 
         }
         catch(ClassNotFoundException | SQLException e){
             System.out.println(e.getMessage());
         }
-        txtNome.setText("");
-        txtCpf.setText("");
-        txtDataNasc.setText("");
-        rdbAposentado.setSelected(false);
-        cmbSexo.setSelectedIndex(0);
-        txtNome.requestFocus();
+        txtUsuario.setText("");
+        txtSenha.setText("");
+        cmbTipo.setSelectedIndex(0);
+        txtUsuario.requestFocus();
     }
 }

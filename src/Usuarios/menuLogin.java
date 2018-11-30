@@ -20,8 +20,9 @@ public class menuLogin extends javax.swing.JFrame {
      */
     public menuLogin() {
         initComponents();
+        this.getRootPane().setDefaultButton(btnLogin);
+        btnLogin.requestFocus();
     }
-
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -49,7 +50,7 @@ public class menuLogin extends javax.swing.JFrame {
 
         lblUsuario.setFont(new java.awt.Font("Open Sans", 1, 16)); // NOI18N
         lblUsuario.setForeground(new java.awt.Color(240, 240, 240));
-        lblUsuario.setText("USUARIO:");
+        lblUsuario.setText("USUÁRIO:");
 
         lblSenha.setFont(new java.awt.Font("Open Sans", 1, 16)); // NOI18N
         lblSenha.setForeground(new java.awt.Color(240, 240, 240));
@@ -58,6 +59,7 @@ public class menuLogin extends javax.swing.JFrame {
         txtUsuario.setFont(new java.awt.Font("Open Sans", 0, 14)); // NOI18N
 
         txtSenha.setFont(new java.awt.Font("Open Sans", 0, 14)); // NOI18N
+        txtSenha.setNextFocusableComponent(btnLogin);
 
         btnLogin.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagens/btnLogin.fw.png"))); // NOI18N
         btnLogin.setContentAreaFilled(false);
