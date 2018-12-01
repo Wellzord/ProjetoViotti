@@ -17,8 +17,17 @@ public class Caixa {
     private double valorFinal;
     private Date dataAbertura;
     private Date dataFechamento;
-    private double Lucro;
+    private boolean status;  
 
+    //Construtor para pegar as informações inputadas qdo o cara clicar no botao abre caixa
+    public Caixa(int id, double vlIni, double vlFim){
+        this.valorInicial = vlIni;
+    }
+    
+    public Caixa(){
+        
+    }
+    
     public int getIdCaixa() {
         return idCaixa;
     }
@@ -59,13 +68,11 @@ public class Caixa {
         this.dataFechamento = dataFechamento;
     }
 
-    public double getLucro() {
-        return Lucro;
+    public boolean isStatus() {
+        return status;
     }
 
-    public void setLucro(double Lucro) {
-        this.Lucro = Lucro;
-    }
-    
-    
+    public void setStatus(boolean status) {
+        this.status = status;
+    }  
 }

@@ -14,7 +14,7 @@ public class Usuario {
     private String usuario;
     private String senha;
     private boolean tipoUser;
-    
+    //SE O TIPO FOR TRUE, O USUÁRIO É GERENTE ELSE ATENDENTE
     public Usuario(String user, String pass, boolean tp){
         this.usuario = user;
         this.senha = pass;

@@ -4,8 +4,15 @@
  * and open the template in the editor.
  */
 package Views;
+import Caixa.Caixa;
+import Caixa.CaixaDAO;
 import Cliente.menuCadCliente;
+import java.awt.HeadlessException;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 /**
  *
  * @author Wellington
@@ -116,10 +123,20 @@ public class menuPrincipal extends javax.swing.JFrame {
         btnAbreCaixa.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagens/abrirCaixa.fw.png"))); // NOI18N
         btnAbreCaixa.setContentAreaFilled(false);
         btnAbreCaixa.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnAbreCaixa.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAbreCaixaActionPerformed(evt);
+            }
+        });
 
         btnFechaCaixa.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagens/fecharCaixa.fw.png"))); // NOI18N
         btnFechaCaixa.setContentAreaFilled(false);
         btnFechaCaixa.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnFechaCaixa.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnFechaCaixaActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout pnlCaixaLayout = new javax.swing.GroupLayout(pnlCaixa);
         pnlCaixa.setLayout(pnlCaixaLayout);
@@ -295,6 +312,51 @@ public class menuPrincipal extends javax.swing.JFrame {
         cadCli.setVisible(true);     
     }//GEN-LAST:event_btnCadCliActionPerformed
 
+    private void btnAbreCaixaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAbreCaixaActionPerformed
+        // TODO add your handling code here:
+        CaixaDAO dbCx = new CaixaDAO();
+        try {
+            if(dbCx.verificaStatus())
+                JOptionPane.showMessageDialog(this, "O caixa já se encontra aberto!", "Caixa Aberto", JOptionPane.INFORMATION_MESSAGE);
+            else{
+                try{
+                    double resp;
+                    resp = Double.valueOf(JOptionPane.showInputDialog(null, "Digite o valor inicial para abrir o caixa:", "Abertura de Caixa", JOptionPane.PLAIN_MESSAGE));
+                    insereCaixa(resp);
+                }
+                catch(HeadlessException | NumberFormatException e){
+                    JOptionPane.showMessageDialog(this, "Informação digitada não corresponde a um valor númerico! \nTente novamente!","ERRO", JOptionPane.ERROR_MESSAGE);
+                } catch (SQLException | ClassNotFoundException ex) {
+                    Logger.getLogger(menuPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        } catch (ClassNotFoundException | SQLException ex) {
+            Logger.getLogger(menuPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btnAbreCaixaActionPerformed
+
+    private void btnFechaCaixaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFechaCaixaActionPerformed
+        try {
+            // TODO add your handling code here:
+            if (verificaGerente()){
+                try{
+                    double resp;
+                    resp = Double.valueOf(JOptionPane.showInputDialog(null, "Digite o valor final para encerrar o caixa:", "Encerramento de Caixa", JOptionPane.PLAIN_MESSAGE));
+                    encerraCaixa(resp);
+                }
+                catch(HeadlessException | NumberFormatException e){
+                    JOptionPane.showMessageDialog(this, "Informação digitada não corresponde a um valor númerico! \nTente novamente!","ERRO", JOptionPane.ERROR_MESSAGE);
+                } catch (SQLException | ClassNotFoundException ex) {
+                    Logger.getLogger(menuPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            else return;
+        } catch (ClassNotFoundException | SQLException ex) {
+            Logger.getLogger(menuPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+    }//GEN-LAST:event_btnFechaCaixaActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -351,4 +413,38 @@ public class menuPrincipal extends javax.swing.JFrame {
     private javax.swing.JPanel pnlPrincipal;
     private javax.swing.JPanel pnlVendas;
     // End of variables declaration//GEN-END:variables
+    //Abre o caixa
+    public void insereCaixa(double vl) throws SQLException, ClassNotFoundException{
+        CaixaDAO dbCaixa = new CaixaDAO();
+        Caixa cx = new Caixa();
+        cx.setIdCaixa(dbCaixa.carregaCodigo());
+        cx.setValorInicial(vl);
+        cx.setValorFinal(0);
+        cx.setStatus(true);
+        if (dbCaixa.abreCaixa(cx))
+            JOptionPane.showMessageDialog(this, "Caixa aberto com sucesso!", "SUCESSO", JOptionPane.PLAIN_MESSAGE);
+        else
+            JOptionPane.showMessageDialog(this, "Não foi possível abrir o caixa!", "ERRO", JOptionPane.ERROR_MESSAGE);
+    }
+    //Fecha o caixa
+    public void encerraCaixa(double vl) throws SQLException, ClassNotFoundException{
+        CaixaDAO dbCaixa = new CaixaDAO();
+        Caixa cx = new Caixa();
+        cx.setValorFinal(vl);
+        cx.setStatus(false);
+        if (dbCaixa.fechaCaixa(cx))
+            JOptionPane.showMessageDialog(this, "Caixa encerrado com sucesso!", "SUCESSO", JOptionPane.PLAIN_MESSAGE);
+        else
+            JOptionPane.showMessageDialog(this, "Não foi possível encerrar o caixa!", "ERRO", JOptionPane.ERROR_MESSAGE);
+    }
+    //Verifica as credenciais de gerente para depois liberar o fechamento do caixa
+    public boolean verificaGerente() throws ClassNotFoundException, SQLException{
+        CaixaDAO dbCaixa = new CaixaDAO();
+        JOptionPane.showMessageDialog(this, "É necessário informar suas credenciais de gerente!", "ATENÇÃO", JOptionPane.INFORMATION_MESSAGE);
+        String usuario = JOptionPane.showInputDialog(null,"Digite o nome de usuário: ");
+        String senha = JOptionPane.showInputDialog(null,"Digite sua senha: ");
+        if(dbCaixa.checkGerente(usuario, senha))
+            return true;
+        else return false;
+    }
 }
