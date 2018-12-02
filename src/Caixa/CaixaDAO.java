@@ -24,7 +24,7 @@ public class CaixaDAO {
     public boolean abreCaixa(Caixa obj) throws SQLException, ClassNotFoundException {
         String sql;
         //cria o comando DML
-        sql = "INSERT INTO CAIXAS (IDCAIXA, VALORINICIAL, DATAABERTURA, VALORFINAL, STATUS) values (?, ?, CURRENT_TIMESTAMP, ?, ?)";
+        sql = "INSERT INTO CAIXAS (IDCAIXA, VALORINICIAL, DATAABERTURA, VALORFINAL, STATUSCX) values (?, ?, NOW(), ?, ?)";
         //Cria o pst com base na conexao e no comando DML
         BancoDerby.abrir();
         stmt = BancoDerby.getConexao().prepareStatement(sql);
@@ -48,7 +48,7 @@ public class CaixaDAO {
     public boolean fechaCaixa(Caixa obj) throws SQLException, ClassNotFoundException {
         String sql;
         //cria o comando DML
-        sql = "UPDATE CAIXAS SET DATAFECHAMENTO=CURRENT_TIMESTAMP, VALORFINAL=?, STATUS=? WHERE STATUS=true";
+        sql = "UPDATE CAIXAS SET DATAFECHAMENTO=NOW(), VALORFINAL=?, STATUSCX=? WHERE STATUSCX=true";
         //Cria o pst com base na conexao e no comando DML
         BancoDerby.abrir();
         stmt = BancoDerby.getConexao().prepareStatement(sql);
@@ -89,12 +89,12 @@ public class CaixaDAO {
     
     public boolean verificaStatus() throws ClassNotFoundException, SQLException{
         boolean aux;
-        String sql = "SELECT STATUS FROM CAIXAS ORDER BY IDCAIXA DESC";
+        String sql = "SELECT STATUSCX FROM CAIXAS ORDER BY IDCAIXA DESC";
         BancoDerby.abrir();
         stmt = BancoDerby.getConexao().prepareStatement(sql);
         rs = stmt.executeQuery();
         rs.next();
-        aux = rs.getBoolean("STATUS");
+        aux = rs.getBoolean("STATUSCX");
         if (aux)
             return true;
         else

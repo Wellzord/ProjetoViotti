@@ -26,7 +26,9 @@ import javax.swing.table.DefaultTableModel;
  */
 public class menuVendas extends javax.swing.JFrame {
     private Venda venda = new Venda();
+    private VendaDAO dbVenda = new VendaDAO();
     private MedicamentoDAO dbMed = new MedicamentoDAO();
+    public static int idVenda;
     /**
      * Creates new form menuVendas
      */
@@ -186,6 +188,11 @@ public class menuVendas extends javax.swing.JFrame {
         btnFinaliza.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagens/finalizarVenda.fw.png"))); // NOI18N
         btnFinaliza.setContentAreaFilled(false);
         btnFinaliza.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnFinaliza.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnFinalizaActionPerformed(evt);
+            }
+        });
 
         txtValorTotal.setFont(new java.awt.Font("Open Sans", 0, 22)); // NOI18N
         txtValorTotal.setForeground(new java.awt.Color(240, 240, 240));
@@ -335,8 +342,8 @@ public class menuVendas extends javax.swing.JFrame {
                         .addGap(53, 53, 53)
                         .addComponent(btnRemove, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 328, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(50, 50, 50))
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 348, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(30, 30, 30))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(21, 21, 21)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -439,8 +446,8 @@ public class menuVendas extends javax.swing.JFrame {
         // TODO add your handling code here:
         try {
             int aux = (int)tbMeds.getValueAt(tbMeds.getSelectedRow(), 0);
-            somaValorTotal();
             addLinhaCarrinho(aux);
+            somaValorTotal();
             preencheQtd();
         } catch (ClassNotFoundException | SQLException ex) {
             Logger.getLogger(menuVendas.class.getName()).log(Level.SEVERE, null, ex);
@@ -479,6 +486,16 @@ public class menuVendas extends javax.swing.JFrame {
             return;
         }
     }//GEN-LAST:event_btnConcedeActionPerformed
+
+    private void btnFinalizaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFinalizaActionPerformed
+        try {
+            finalizarVenda();
+            JOptionPane.showMessageDialog(null, "Venda Registra com sucesso!", "SUCESSO", JOptionPane.INFORMATION_MESSAGE);
+            this.dispose();
+        } catch (SQLException | ClassNotFoundException ex) {
+            JOptionPane.showMessageDialog(null, "Erro ao registar venda!", "ERRO", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_btnFinalizaActionPerformed
 
     /**
      * @param args the command line arguments
@@ -625,4 +642,24 @@ public class menuVendas extends javax.swing.JFrame {
         }
     }
     
+    public void finalizarVenda() throws SQLException, ClassNotFoundException{
+        venda.setCliente(menuPrincipal.cli.getIdCliente());
+        menuVendas.idVenda = dbVenda.carregaCodigo();
+        venda.setIdVenda(menuVendas.idVenda);
+        venda.setValorTotal(Double.valueOf(txtValorTotal.getText()));
+        if (cmbTipoPag.getSelectedIndex()==0)
+            venda.setTipoPag("Cartao");
+        else 
+            venda.setTipoPag("Dinheiro");
+        venda.setQtdItens(Integer.valueOf(txtQtd.getText()));
+        dbVenda.inserir(venda);
+        registraItensVenda();
+    }
+    
+    public void registraItensVenda() throws SQLException, ClassNotFoundException{
+        for(int i = 0; i < tbCarrinho.getRowCount(); i++) {
+            int idMed = Integer.valueOf(tbCarrinho.getModel().getValueAt(i,0).toString());  
+            dbVenda.insereItem(menuVendas.idVenda, idMed);
+        }
+    }
 }

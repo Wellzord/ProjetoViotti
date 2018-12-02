@@ -19,12 +19,12 @@ public class BancoDerby {
     public static void abrir() throws ClassNotFoundException, SQLException {
         //carrega o driver
         try{
-            Class.forName("org.apache.derby.jdbc.EmbeddedDriver").newInstance();
+            Class.forName("com.mysql.jdbc.Driver").newInstance();
         }
         catch(ClassNotFoundException | IllegalAccessException | InstantiationException ex){
             System.out.println("Falhou na hora de pegar o driver");
         }
-        con = DriverManager.getConnection("jdbc:derby://localhost:1527/Farmacia", "well", "well");
+        con = DriverManager.getConnection("jdbc:mysql://localhost:3306/Farmacia", "root", "");
     }
     
     public static void fechar() throws SQLException {

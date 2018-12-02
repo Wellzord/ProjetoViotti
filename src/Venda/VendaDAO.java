@@ -21,20 +21,19 @@ public class VendaDAO {
     //recebera estrutura com dados das tabelas
     private java.sql.ResultSet rs;
     
-    public boolean inserir(Cliente obj) throws SQLException, ClassNotFoundException {
+    public boolean inserir(Venda obj) throws SQLException, ClassNotFoundException {
         String sql;
         //cria o comando DML
-        sql = "INSERT INTO VENDAS (IDCLIENTE, CPF, NOME, DATANASC, APOSENTADO, SEXO) values (?, ?, ?, ?, ?, ?)";
+        sql = "INSERT INTO VENDAS (IDVENDA, DATAVENDA, VALORTOTAL, TIPOPAG, QTDITEM, FK_IDCLIENTE) values (?, NOW(), ?, ?, ?, ?)";
         //Cria o pst com base na conexao e no comando DML
         BancoDerby.abrir();
         stmt = BancoDerby.getConexao().prepareStatement(sql);
         //Atribuir os dados do model para o pst
-        stmt.setInt(1, obj.getIdCliente());
-        stmt.setString(2, obj.getCpf());
-        stmt.setString(3, obj.getNome());
-        stmt.setDate(4, new java.sql.Date(obj.getDateNasc().getTime()));
-        stmt.setInt(5, obj.isAposentado() ? 1 : 0);
-        stmt.setString(6, String.valueOf(obj.getSexo()));
+        stmt.setInt(1, obj.getIdVenda());
+        stmt.setDouble(2, obj.getValorTotal());
+        stmt.setString(3, obj.getTipoPag());
+        stmt.setInt(4, obj.getQtdItens());
+        stmt.setInt(5, obj.getCliente());
         
         //vamos executar o comando
         if(stmt.executeUpdate() > 0) {
@@ -47,4 +46,43 @@ public class VendaDAO {
         }
     }
     
+    public int carregaCodigo () throws SQLException, ClassNotFoundException {
+        //função para ir preenchendo o ID Venda no banco de dados
+        int retorno;
+        String sql = "SELECT IDVENDA FROM VENDAS ORDER BY IDVENDA DESC";
+        BancoDerby.abrir();
+        stmt = BancoDerby.getConexao().prepareStatement(sql);
+        rs = stmt.executeQuery();
+        if(!rs.next()) {
+            rs.close();
+            BancoDerby.fechar();
+            return 1;
+        }
+        else {
+            retorno = rs.getInt("IDVENDA");
+            rs.close();
+            BancoDerby.fechar();
+            return retorno+1;
+        }
+    }
+    
+    public boolean insereItem (int idVenda, int idMed) throws ClassNotFoundException, SQLException{
+        //cria o comando DML
+        String sql = "INSERT INTO VENDASITENS (FK_IDVENDA, FK_IDMEDICAMENTO) values (?, ?)";
+        //Cria o pst com base na conexao e no comando DML
+        BancoDerby.abrir();
+        stmt = BancoDerby.getConexao().prepareStatement(sql);
+        //Atribuir os dados do model para o pst
+        stmt.setInt(1, idVenda);
+        stmt.setInt(2, idMed);       
+        //vamos executar o comando
+        if(stmt.executeUpdate() > 0) {
+            BancoDerby.fechar();
+            return true;
+        }
+        else {
+            BancoDerby.fechar();
+            return false;
+        }
+    }
 }

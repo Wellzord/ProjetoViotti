@@ -18,8 +18,16 @@ public class Venda {
     private double valorTotal;
     private ArrayList<Medicamento> lstMeds = new ArrayList<>();
     private String tipoPag;
-    private int user;
+    private int qtdItens;
+    
+    public int getQtdItens() {
+        return qtdItens;
+    }
 
+    public void setQtdItens(int qtdItens) {
+        this.qtdItens = qtdItens;
+    }
+    
     public int getIdVenda() {
         return idVenda;
     }
@@ -59,14 +67,4 @@ public class Venda {
     public void setTipoPag(String tipoPag) {
         this.tipoPag = tipoPag;
     }
-
-    public int getUser() {
-        return user;
-    }
-
-    public void setUser(int user) {
-        this.user = user;
-    }
-
-
 }

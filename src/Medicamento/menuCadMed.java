@@ -234,7 +234,7 @@ public class menuCadMed extends javax.swing.JFrame {
         med.setPreco(Double.parseDouble(auxStr));
         try {
             if(dbMed.inserir(med)){
-                JOptionPane.showMessageDialog(this, "Filme Inserido com Sucesso!!!", "Mensagem ao Usuário", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Medicamento Inserido com Sucesso!!!", "Mensagem ao Usuário", JOptionPane.INFORMATION_MESSAGE);
                 limpar();
             }
             else {
