@@ -129,11 +129,11 @@ public class MedicamentoDAO implements DAO<Medicamento> {
     }
     
     @Override
-    public List<Medicamento> listar(String criterio) throws SQLException, ClassNotFoundException {
+    public ArrayList<Medicamento> listar(String criterio) throws SQLException, ClassNotFoundException {
         //cria uma coleção para filmes
         ArrayList<Medicamento> lstMeds = new ArrayList<>();
         Medicamento med = null;
-        String sql = "SELECT * FROM NEDICAMENTOS ";
+        String sql = "SELECT * FROM MEDICAMENTOS ";
         //verifica se tem criterio
         if(criterio.length() > 0)
             sql += "WHERE " + criterio;

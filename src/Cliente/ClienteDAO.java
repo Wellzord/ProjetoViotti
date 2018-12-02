@@ -5,6 +5,7 @@
  */
 package Cliente;
 
+import Views.menuPrincipal;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -177,5 +178,31 @@ public class ClienteDAO implements DAO<Cliente> {
             BancoDerby.fechar();
             return retorno+1;
         }
+    }
+    
+    public boolean busca2(Cliente obj) throws SQLException, ClassNotFoundException{
+        cliente = null;
+        String sql = "SELECT * FROM CLIENTES WHERE CPF = ?";
+        BancoDerby.abrir();
+        stmt = BancoDerby.getConexao().prepareStatement(sql);
+        //Atribuir os dados do model para o stmt
+        stmt.setString(1, obj.getCpf());
+        //Executa a PESQUISA no banco
+        rs = stmt.executeQuery();
+        //le o proximo registro
+        if(rs.next()) { //achou alguem 
+            //mover os dados do resultSet para o objeto filme
+            menuPrincipal.cli.setIdCliente(rs.getInt("IDCLIENTE"));
+            menuPrincipal.cli.setNome(rs.getString("NOME"));
+            menuPrincipal.cli.setDateNasc(rs.getDate("DATANASC"));
+            menuPrincipal.cli.setAposentado(rs.getInt("APOSENTADO") == 1 ? true : false);
+            menuPrincipal.cli.setSexo(rs.getString("SEXO").charAt(0));
+            rs.close();
+            BancoDerby.fechar();
+            return true;
+        }
+        rs.close();
+        BancoDerby.fechar();
+        return false;
     }
 }

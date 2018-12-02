@@ -18,7 +18,15 @@ public class Cliente {
     private Date dateNasc;
     private boolean aposentado;
     private char sexo;
-
+    
+    public Cliente(){
+        
+    }
+    
+    public Cliente(String cpf){
+        this.cpf = cpf;
+    }
+    
     public int getIdCliente() {
         return idCliente;
     }

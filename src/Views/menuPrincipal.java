@@ -4,9 +4,13 @@
  * and open the template in the editor.
  */
 package Views;
+import Cliente.ClienteDAO;
 import Caixa.Caixa;
 import Caixa.CaixaDAO;
+import Cliente.Cliente;
 import Cliente.menuCadCliente;
+import Usuarios.Usuario;
+import Venda.menuVendas;
 import java.awt.HeadlessException;
 import java.sql.SQLException;
 import java.util.logging.Level;
@@ -18,7 +22,8 @@ import javax.swing.JOptionPane;
  * @author Wellington
  */
 public class menuPrincipal extends javax.swing.JFrame {
-
+    public static final Cliente cli = new Cliente();
+    public static final Usuario user = new Usuario();
     /**
      * Creates new form menuPrincipal
      */
@@ -174,6 +179,11 @@ public class menuPrincipal extends javax.swing.JFrame {
         btnVenda.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagens/efetuaVenda.fw.png"))); // NOI18N
         btnVenda.setContentAreaFilled(false);
         btnVenda.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnVenda.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnVendaActionPerformed(evt);
+            }
+        });
 
         btnRelatVenda.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagens/relatorioVenda.fw.png"))); // NOI18N
         btnRelatVenda.setContentAreaFilled(false);
@@ -356,6 +366,28 @@ public class menuPrincipal extends javax.swing.JFrame {
         }
         
     }//GEN-LAST:event_btnFechaCaixaActionPerformed
+
+    private void btnVendaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVendaActionPerformed
+        String resp = JOptionPane.showInputDialog(null, "Digite o CPF do cliente", "Identificação", JOptionPane.PLAIN_MESSAGE);
+        ClienteDAO dbCli = new ClienteDAO();
+        menuVendas menuVenda = new menuVendas();
+        try{
+            cli.setCpf(resp);
+            if(dbCli.busca2(cli)){
+                System.out.println(cli.getNome());
+                this.setExtendedState(JFrame.ICONIFIED);
+                menuVenda.setVisible(true);
+            }
+            else{
+                JOptionPane.showMessageDialog(null, "Cliente não encontrado!", "Cliente inexistente", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+        }
+        catch(ClassNotFoundException | SQLException ex){
+            System.out.println("deu erro");
+        }
+
+    }//GEN-LAST:event_btnVendaActionPerformed
 
     /**
      * @param args the command line arguments
